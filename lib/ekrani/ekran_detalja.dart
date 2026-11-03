@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../modeli/post.dart';
 
 class EkranDetalja extends StatelessWidget {
 

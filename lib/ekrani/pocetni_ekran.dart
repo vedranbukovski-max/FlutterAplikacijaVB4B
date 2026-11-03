@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ekran_popisa.dart';
 
 class PocetniEkran extends StatelessWidget {
   const new({super.key});
