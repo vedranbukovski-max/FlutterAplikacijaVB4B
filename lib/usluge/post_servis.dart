@@ -18,12 +18,5 @@ class ServisPostova {
 
     return features
       .map((feature) => Post.fromJson(feature as Map<String, dynamic>)).toList();
-
-    Stream<List<Post>> pratiPostove() async* {
-      while (true) {
-        yield await dohvatiPostove();
-        await Future.delayed(const Duration(minutes: 1));
-        }
-      }
     }
   }

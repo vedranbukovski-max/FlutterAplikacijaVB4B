@@ -46,14 +46,15 @@ class _EkranPopisaState extends State<EkranPopisa> {
 
   void _togglePin(Post post) {
     setState(() {
-      if (!_pinned.remove(post.id))
-        _pinned.add(post.id);
+      if (!_pinned.remove((post.id).toString())) {
+        _pinned.add((post.id).toString());
+      }
     });
   }
 
   void _removePost(Post post) {
     setState(() {
-      _removed.add(post.id);
+      _removed.add((post.id).toString());
     });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -62,7 +63,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
           label: 'Poništi',
           onPressed: () {
             setState(() {
-              _removed.remove(post.id);
+              _removed.remove((post.id).toString());
             });
           },
         ),
@@ -71,7 +72,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
   }
 
   Widget _buildList(List<Post> posts) {
-    final visible = posts.where((post) => !_removed.contains(post.id)).toList();
+    final visible = posts.where((post) => !_removed.contains((post.id).toString())).toList();
     if (visible.isEmpty) {
       return const Center(child: Text('Nema postova za prikaz.'));
     }
@@ -84,7 +85,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
           final post = visible[index];
           return PostWidget(
             post: post,
-            pinned: _pinned.contains(post.id),
+            pinned: _pinned.contains((post.id).toString()),
             onTap: () => _openDetail(post),
             onLongPress: () => _togglePin(post),
             onDismissed: () => _removePost(post),
@@ -94,6 +95,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Popis postova')),
