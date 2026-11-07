@@ -24,7 +24,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
     _posts = _service.dohvatiPostove();
   }
 
-  Future<void> reload() {
+  Future<void> _reload() {
     setState(() {
       _posts = _service.dohvatiPostove();
     });
@@ -36,13 +36,92 @@ class _EkranPopisaState extends State<EkranPopisa> {
       context, 
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition (opacity: animation, child: child,),
-        pageBuilder: (context, animation, secondaryAnimation) => EkranDetalja(post: post),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) => 
+            FadeTransition (opacity: animation, child: child),
+        pageBuilder: (context, animation, secondaryAnimation) => 
+            EkranDetalja(post: post),
+      ),
+    );
+  }
+
+  void _togglePin(Post post) {
+    setState(() {
+      if (!_pinned.remove(post.id))
+        _pinned.add(post.id);
+    });
+  }
+
+  void _removePost(Post post) {
+    setState(() {
+      _removed.add(post.id);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Post "${post.title}" je uklonjen.'),
+        action: SnackBarAction(
+          label: 'Poništi',
+          onPressed: () {
+            setState(() {
+              _removed.remove(post.id);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildList(List<Post> posts) {
+    final visible = posts.where((post) => !_removed.contains(post.id)).toList();
+    if (visible.isEmpty) {
+      return const Center(child: Text('Nema postova za prikaz.'));
+    }
+    return RefreshIndicator(
+      onRefresh: _reload, 
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: visible.length,
+        itemBuilder: (context, index) {
+          final post = visible[index];
+          return PostWidget(
+            post: post,
+            pinned: _pinned.contains(post.id),
+            onTap: () => _openDetail(post),
+            onLongPress: () => _togglePin(post),
+            onDismissed: () => _removePost(post),
+          );
+        },
       ),
     );
   }
 
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: const Text('Popis postova')),
+      body: FutureBuilder<List<Post>>(
+        future: _posts,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.wifi_off, size: 48),
+                const SizedBox(height: 12),
+                const Text('Provjeri internetsku vezu i pokušaj ponovno.'),
+                const SizedBox(height: 12),
+                FilledButton(
+                  onPressed: _reload,
+                  child: const Text('Pokušaj ponovno'),
+                ),
+              ],
+            )
+          );
+          }
+          return _buildList(snapshot.data!);
+        },
+      ),
+    );
   }
 }
