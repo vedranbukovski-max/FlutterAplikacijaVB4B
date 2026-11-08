@@ -18,40 +18,31 @@ class _EkranPopisaState extends State<EkranPopisa> {
   final _pinned = <int>{};
 
   @override
-  
   void initState(){
     super.initState();
     _posts = _service.dohvatiPostove();
   }
-
   Future<void> _reload() {
     setState(() {
       _posts = _service.dohvatiPostove();
     });
     return _posts;
   }
-
   void _openDetail(Post post) {
     Navigator.push(
       context, 
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) => 
-            FadeTransition (opacity: animation, child: child),
-        pageBuilder: (context, animation, secondaryAnimation) => 
-            EkranDetalja(post: post),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
+        pageBuilder: (context, animation, secondaryAnimation) => EkranDetalja(post: post),
       ),
     );
   }
-
   void _togglePin(Post post) {
     setState(() {
-      if (!_pinned.remove(post.id)) {
-        _pinned.add(post.id);
-      }
+      if (!_pinned.remove(post.id)) {_pinned.add(post.id);}
     });
   }
-
   void _removePost(Post post) {
     setState(() {
       _removed.add(post.id);
@@ -103,10 +94,9 @@ class _EkranPopisaState extends State<EkranPopisa> {
         future: _posts,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            debugPrint('Greška: ${snapshot.error}');
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

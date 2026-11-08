@@ -17,13 +17,8 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-    _pulse = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    _scale = Tween<double>(begin: 1, end: 1.2).animate(
-      CurvedAnimation(parent: _pulse, curve: Curves.easeInOut)
-    );
+    _pulse = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    _scale = Tween<double>(begin: 1.0, end: 1.2).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
   }
 
   @override
@@ -49,11 +44,13 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
               ),
             ),
           ),
+          const SizedBox(height: 32),
           ListTile(
             leading: const Icon(Icons.person),
             title: Text('Identifikator korisnika:'),
             trailing: Text(post.userId.toString()),
-          ), ListTile(
+          ), 
+          ListTile(
             leading: const Icon(Icons.title),
             title: Text('Naslov posta:'),
             trailing: Text(post.title),
