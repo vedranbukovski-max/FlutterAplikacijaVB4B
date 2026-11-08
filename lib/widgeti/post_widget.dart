@@ -8,7 +8,14 @@ class PostWidget extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onLongPress;
   final VoidCallback onDismissed;
-  const PostWidget({super.key, required this.post, required this.pinned, required this.onTap, required this.onLongPress, required this.onDismissed});
+  const PostWidget({
+    super.key,
+    required this.post,
+    required this.pinned,
+    required this.onTap,
+    required this.onLongPress,
+    required this.onDismissed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +32,18 @@ class PostWidget extends StatelessWidget {
       child: ListTile(
         leading: Hero(
           tag: 'post_${post.id}',
-          child: OznakaWidget(id: post.id)
+          child: OznakaWidget(id: post.id),
         ),
         title: Text(post.title),
         trailing: AnimatedScale(
           scale: pinned ? 1 : 0,
-          duration: const Duration(milliseconds: 360),
+          duration: const Duration(milliseconds: 250),
           curve: Curves.easeOutBack,
           child: const Icon(Icons.push_pin),
         ),
         onTap: onTap,
         onLongPress: onLongPress,
-      )
+      ),
     );
   }
 }

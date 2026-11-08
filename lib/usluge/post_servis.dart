@@ -11,10 +11,12 @@ class ServisPostova {
       throw Exception('Neuspješno dohvaćanje postova (${response.statusCode})');
     }
     final podaci = jsonDecode(response.body) as List<dynamic>;
-    return podaci.map((item) => Post.fromJson(item as Map<String, dynamic>)).toList();
+    return podaci
+        .map((item) => Post.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
   Stream<List<Post>> pratiPostove() async* {
-    while(true) {
+    while (true) {
       yield await dohvatiPostove();
       await Future.delayed(const Duration(minutes: 1));
     }

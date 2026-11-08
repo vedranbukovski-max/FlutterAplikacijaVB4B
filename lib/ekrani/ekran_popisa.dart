@@ -18,7 +18,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
   final _pinned = <int>{};
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _posts = _service.dohvatiPostove();
   }
@@ -30,17 +30,21 @@ class _EkranPopisaState extends State<EkranPopisa> {
   }
   void _openDetail(Post post) {
     Navigator.push(
-      context, 
+      context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
-        pageBuilder: (context, animation, secondaryAnimation) => EkranDetalja(post: post),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            EkranDetalja(post: post),
       ),
     );
   }
   void _togglePin(Post post) {
     setState(() {
-      if (!_pinned.remove(post.id)) {_pinned.add(post.id);}
+      if (!_pinned.remove(post.id)) {
+        _pinned.add(post.id);
+      }
     });
   }
   void _removePost(Post post) {
@@ -68,7 +72,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
       return const Center(child: Text('Nema postova za prikaz.'));
     }
     return RefreshIndicator(
-      onRefresh: _reload, 
+      onRefresh: _reload,
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: visible.length,
@@ -93,24 +97,26 @@ class _EkranPopisaState extends State<EkranPopisa> {
       body: FutureBuilder<List<Post>>(
         future: _posts,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting &&
+              !snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            return Center(child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.wifi_off, size: 48),
-                const SizedBox(height: 12),
-                const Text('Provjeri internetsku vezu i pokušaj ponovno.'),
-                const SizedBox(height: 12),
-                FilledButton(
-                  onPressed: _reload,
-                  child: const Text('Pokušaj ponovno'),
-                ),
-              ],
-            )
-          );
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.wifi_off, size: 48),
+                  const SizedBox(height: 12),
+                  const Text('Provjeri internetsku vezu i pokušaj ponovno.'),
+                  const SizedBox(height: 12),
+                  FilledButton(
+                    onPressed: _reload,
+                    child: const Text('Pokušaj ponovno'),
+                  ),
+                ],
+              ),
+            );
           }
           return _buildList(snapshot.data!);
         },

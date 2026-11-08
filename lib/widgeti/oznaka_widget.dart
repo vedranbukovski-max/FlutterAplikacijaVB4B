@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-Color boja (int id) {return Colors.blue;}
+Color boja(int id) {
+  return Colors.blue;
+}
 
 class OznakaWidget extends StatelessWidget {
   final int id;
@@ -17,9 +19,12 @@ class OznakaWidget extends StatelessWidget {
         padding: EdgeInsets.all(velicina * 0.25),
         decoration: BoxDecoration(shape: BoxShape.circle, color: boja(id)),
         child: FittedBox(
-          child: Text(id.toString(), style: const TextStyle(fontWeight: FontWeight.bold))
-        )
-      )
+          child: Text(
+            id.toString(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
     );
   }
 }

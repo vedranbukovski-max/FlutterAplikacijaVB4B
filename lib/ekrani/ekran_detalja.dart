@@ -10,15 +10,22 @@ class EkranDetalja extends StatefulWidget {
   State<EkranDetalja> createState() => _EkranDetaljaState();
 }
 
-class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderStateMixin {
+class _EkranDetaljaState extends State<EkranDetalja>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _pulse;
   late final Animation<double> _scale;
-  
+
   @override
   void initState() {
     super.initState();
-    _pulse = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
-    _scale = Tween<double>(begin: 1.0, end: 1.2).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
+    _pulse = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+    _scale = Tween<double>(
+      begin: 1.0,
+      end: 1.15,
+    ).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
   }
 
   @override
@@ -26,7 +33,7 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
     _pulse.dispose();
     super.dispose();
   }
-   
+
   @override
   Widget build(BuildContext context) {
     final post = widget.post;
@@ -40,7 +47,7 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
               scale: _scale,
               child: Hero(
                 tag: post.id,
-                child: OznakaWidget(id: post.id, velicina: 100)
+                child: OznakaWidget(id: post.id, velicina: 100),
               ),
             ),
           ),
@@ -49,7 +56,7 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
             leading: const Icon(Icons.person),
             title: Text('Identifikator korisnika:'),
             trailing: Text(post.userId.toString()),
-          ), 
+          ),
           ListTile(
             leading: const Icon(Icons.title),
             title: Text('Naslov posta:'),
