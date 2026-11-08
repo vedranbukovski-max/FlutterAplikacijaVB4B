@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../modeli/post.dart';
+import '../widgeti/oznaka_widget.dart';
 
 class PostWidget extends StatelessWidget {
   final Post post;
@@ -32,16 +33,14 @@ class PostWidget extends StatelessWidget {
       child: ListTile(
         leading: Hero(
           tag: 'post_${post.id}',
-          child: CircleAvatar(
-            child: Text(post.title[0]),
-          ),
+          child: OznakaWidget(id: post.id)
         ),
         title: Text(post.title),
         subtitle: Text(post.body),
         trailing: AnimatedScale(
           scale: pinned ? 1 : 0,
           duration: const Duration(milliseconds: 360),
-          curve: Curves.easeInOut,
+          curve: Curves.easeOutBack,
           child: const Icon(Icons.push_pin),
         ),
         onTap: onTap,
