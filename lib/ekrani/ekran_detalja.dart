@@ -46,7 +46,7 @@ class _EkranDetaljaState extends State<EkranDetalja>
             child: ScaleTransition(
               scale: _scale,
               child: Hero(
-                tag: post.id,
+                tag: 'post_${post.id}',
                 child: OznakaWidget(id: post.id, velicina: 100),
               ),
             ),

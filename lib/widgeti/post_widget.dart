@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../modeli/post.dart';
-import '../widgeti/oznaka_widget.dart';
+import 'oznaka_widget.dart';
 
 class PostWidget extends StatelessWidget {
   final Post post;

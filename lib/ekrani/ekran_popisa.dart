@@ -32,11 +32,12 @@ class _EkranPopisaState extends State<EkranPopisa> {
     Navigator.push(
       context,
       PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 400),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(opacity: animation, child: child),
+        transitionDuration: const Duration(milliseconds: 300),
         pageBuilder: (context, animation, secondaryAnimation) =>
             EkranDetalja(post: post),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+        
       ),
     );
   }
@@ -67,7 +68,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
   }
 
   Widget _buildList(List<Post> posts) {
-    final visible = posts.where((post) => !_removed.contains(post.id)).toList();
+    final visible = posts.where((p) => !_removed.contains(p.id)).toList();
     if (visible.isEmpty) {
       return const Center(child: Text('Nema postova za prikaz.'));
     }
