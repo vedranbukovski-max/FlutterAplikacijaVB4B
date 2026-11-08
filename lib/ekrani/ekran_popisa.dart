@@ -106,6 +106,7 @@ class _EkranPopisaState extends State<EkranPopisa> {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
+            debugPrint('Greška: ${snapshot.error}');
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../modeli/post.dart';
 
 class ServisPostova {
@@ -13,10 +15,15 @@ class ServisPostova {
       throw Exception('Neuspješno dohvaćanje postova (${response.statusCode})');
     }
 
-    final json = jsonDecode(response.body) as Map<String, dynamic>;
-    final features = json['features'] as List<dynamic>;
-
-    return features
-      .map((feature) => Post.fromJson(feature as Map<String, dynamic>)).toList();
+    final podaci = jsonDecode(response.body) as List<dynamic>;
+    return podaci
+        .map((item) => Post.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+  Stream<List<Post>> pratiPostove() async* {
+    while(true) {
+      yield await dohvatiPostove();
+      await Future.delayed(const Duration(minutes: 1));
     }
   }
+}
