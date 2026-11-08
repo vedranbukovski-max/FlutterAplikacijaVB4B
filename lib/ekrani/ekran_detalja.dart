@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../modeli/post.dart';
+import '../widgeti/oznaka_widget.dart';
 
 class EkranDetalja extends StatefulWidget {
   final Post post;
@@ -14,7 +15,7 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
   late final Animation<double> _scale;
   
   @override
-  initState() {
+  void initState() {
     super.initState();
     _pulse = AnimationController(
       vsync: this,
@@ -44,9 +45,23 @@ class _EkranDetaljaState extends State<EkranDetalja> with SingleTickerProviderSt
               scale: _scale,
               child: Hero(
                 tag: post.id,
-                child: Text(post.body, style: Theme.of(context).textTheme.bodyLarge),
+                child: OznakaWidget(id: post.id, velicina: 100)
               ),
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: Text('Identifikator korisnika:'),
+            trailing: Text(post.userId.toString()),
+          ), ListTile(
+            leading: const Icon(Icons.title),
+            title: Text('Naslov posta:'),
+            trailing: Text(post.title),
+          ),
+          ListTile(
+            leading: const Icon(Icons.content_paste),
+            title: Text('Sadržaj posta:'),
+            trailing: Text(post.body),
           ),
         ],
       ),
