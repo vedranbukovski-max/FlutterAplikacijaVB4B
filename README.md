@@ -1,6 +1,6 @@
 # Upravljanje postova
 
-Ova aplikacija izrađena pomoću Fluttera koristi javni poslužitelj s poveznice https://jsonplaceholder.typicode.com/posts kako bi se postovi mogli pregledati, prikvačiti ili izbrisati, ovisno o volji korisnika. Ukupno je 100 postova, 10 po korisniku.
+Ova aplikacija izrađena pomoću Fluttera koristi javni poslužitelj s poveznice https://jsonplaceholder.typicode.com/posts kako bi se postovi mogli pregledati, prikvačiti ili izbrisati, ovisno o volji korisnika. Ukupno je 100 postova, 10 po korisniku. Ovdje su također i dva snimka zaslona stvorene aplikacije.
 
 ## Animacije i geste
 
